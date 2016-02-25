@@ -35,7 +35,7 @@ public class JSONPathLengthAssertion extends AbstractTestElement implements Seri
     }
 
     public int getLength() {
-        return getPropertyAsInt(LENGTH);
+        return getPropertyAsInt(LENGTH, 0);
     }
     public void setLength(int length) {
         setProperty(LENGTH, length);
