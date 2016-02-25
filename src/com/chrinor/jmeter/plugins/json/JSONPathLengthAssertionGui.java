@@ -15,6 +15,7 @@ import org.apache.jorphan.gui.JLabeledTextField;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.jorphan.gui.JLabeledChoice;
 import org.apache.jorphan.logging.LoggingManager;
@@ -40,6 +41,7 @@ public class JSONPathLengthAssertionGui extends AbstractAssertionGui implements 
     public void init() {
         setLayout(new BorderLayout());
         setBorder(makeBorder());
+        add(makeTitlePanel(), BorderLayout.NORTH);
 
         VerticalPanel panel = new VerticalPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
