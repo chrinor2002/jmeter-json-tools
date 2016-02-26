@@ -63,6 +63,7 @@ public class JSONCompareAssertionGui extends AbstractAssertionGui implements Cha
 
         panel.add(applyPath);
         panel.add(compareTo);
+        panel.add(inputPath);
         panel.add(inputValue);
         panel.add(inputVariableName);
         panel.add(compareMode);
