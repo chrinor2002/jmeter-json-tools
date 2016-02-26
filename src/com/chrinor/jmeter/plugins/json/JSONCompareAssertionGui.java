@@ -3,6 +3,7 @@ package com.chrinor.jmeter.plugins.json;
 
 import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -12,6 +13,7 @@ import org.apache.jmeter.testelement.TestElement;
 import org.apache.jorphan.gui.JLabeledChoice;
 import org.apache.jorphan.gui.JLabeledTextArea;
 import org.apache.jorphan.gui.JLabeledTextField;
+import org.apache.jorphan.gui.layout.VerticalLayout;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -34,9 +36,13 @@ public class JSONCompareAssertionGui extends AbstractAssertionGui implements Cha
     }
 
     public void init() {
-        setLayout(new BorderLayout());
+        setLayout(new VerticalLayout(5, VerticalLayout.BOTH, VerticalLayout.TOP));
         setBorder(makeBorder());
-        add(makeTitlePanel(), BorderLayout.NORTH);
+
+        add(makeTitlePanel());
+        Box box = Box.createVerticalBox();
+        box.add(createScopePanel(true));
+        add(box);
 
         VerticalPanel panel = new VerticalPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
@@ -56,7 +62,7 @@ public class JSONCompareAssertionGui extends AbstractAssertionGui implements Cha
         panel.add(inputVariableName);
         panel.add(compareMode);
 
-        add(panel, BorderLayout.CENTER);
+        add(panel);
     }
 
     @Override
