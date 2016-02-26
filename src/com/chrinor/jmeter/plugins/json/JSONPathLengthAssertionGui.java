@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.chrinor.jmeter.plugins.json;
 
 import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
-import javax.swing.JCheckBox;
 import org.apache.jmeter.assertions.gui.AbstractAssertionGui;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
@@ -15,7 +10,6 @@ import org.apache.jorphan.gui.JLabeledTextField;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.jorphan.gui.JLabeledChoice;
 import org.apache.jorphan.logging.LoggingManager;
