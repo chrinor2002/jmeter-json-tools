@@ -1,12 +1,10 @@
 
 package com.chrinor.jmeter.plugins.json;
 
-import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.jmeter.assertions.gui.AbstractAssertionGui;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
