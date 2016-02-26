@@ -26,7 +26,9 @@ public class JSONCompareAssertionGui extends AbstractAssertionGui implements Cha
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     private JLabeledChoice compareTo = null;
+    private JLabeledTextField applyPath = null;
     private JLabeledTextArea inputValue = null;
+    private JLabeledTextField inputPath = null;
     private JLabeledTextField inputVariableName = null;
     private JLabeledChoice compareMode = null;
 
@@ -47,7 +49,9 @@ public class JSONCompareAssertionGui extends AbstractAssertionGui implements Cha
         VerticalPanel panel = new VerticalPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 
+        applyPath = new JLabeledTextField("Apply JSON path: ");
         compareTo = new JLabeledChoice("Compare To: ", new String[]{ JSONCompareAssertion.COMPARE_SCOPE_INPUT, JSONCompareAssertion.COMPARE_SCOPE_VARIABLE });
+        applyPath = new JLabeledTextField("Input JSON path: ");
         inputValue = new JLabeledTextArea("JSON Input: ");
         inputVariableName = new JLabeledTextField("Variable Name: ");
         compareMode = new JLabeledChoice("Compare Mode: ", new String[]{
@@ -57,6 +61,7 @@ public class JSONCompareAssertionGui extends AbstractAssertionGui implements Cha
             JSONCompareAssertion.COMPARE_MODE_STRICT_ORDER
         });
 
+        panel.add(applyPath);
         panel.add(compareTo);
         panel.add(inputValue);
         panel.add(inputVariableName);
@@ -68,7 +73,9 @@ public class JSONCompareAssertionGui extends AbstractAssertionGui implements Cha
     @Override
     public void clearGui() {
         super.clearGui();
+        applyPath.setText("$.");
         compareTo.setText(JSONCompareAssertion.COMPARE_SCOPE_INPUT);
+        inputPath.setText("$.");
         inputValue.setText("");
         inputVariableName.setText("");
         compareMode.setText(JSONCompareAssertion.COMPARE_MODE_LENIENT);
@@ -97,6 +104,8 @@ public class JSONCompareAssertionGui extends AbstractAssertionGui implements Cha
         if (element instanceof JSONCompareAssertion) {
             JSONCompareAssertion jsonAssertion = (JSONCompareAssertion) element;
             saveScopeSettings(jsonAssertion);
+            jsonAssertion.setCompareJsonPath(applyPath.getText());
+            jsonAssertion.setInputJsonPath(inputPath.getText());
             jsonAssertion.setCompareScope(compareTo.getText());
             jsonAssertion.setCompareValue(inputValue.getText());
             jsonAssertion.setCompareVariableName(inputVariableName.getText());
@@ -109,7 +118,9 @@ public class JSONCompareAssertionGui extends AbstractAssertionGui implements Cha
         super.configure(element);
         JSONCompareAssertion jsonAssertion = (JSONCompareAssertion) element;
         showScopeSettings(jsonAssertion, true);
+        applyPath.setText(jsonAssertion.getCompareJsonPath());
         compareTo.setText(jsonAssertion.getCompareScope());
+        inputPath.setText(jsonAssertion.getInputJsonPath());
         inputValue.setText(jsonAssertion.getCompareValue());
         inputVariableName.setText(jsonAssertion.getCompareVariableName());
         compareMode.setText(jsonAssertion.getCompareModeValue());

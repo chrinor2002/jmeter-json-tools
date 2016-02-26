@@ -5,6 +5,7 @@
  */
 package com.chrinor.jmeter.plugins.json;
 
+import com.jayway.jsonpath.JsonPath;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -29,6 +30,8 @@ public class JSONCompareAssertion extends AbstractScopedAssertion implements Ser
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     public static final String COMPARE_SCROPE = "Compare.scrope";
+    public static final String COMPARE_JSON_PATH = "Compare.json_path";
+    public static final String COMPARE_TO_JSON_PATH = "Compare.value.json_path";
     public static final String COMPARE_VARIABLE = "Compare.variable";
     public static final String COMPARE_VALUE = "Compare.value";
     public static final String COMPARE_MODE = "Compare.mode";
@@ -78,7 +81,9 @@ public class JSONCompareAssertion extends AbstractScopedAssertion implements Ser
             }
 
             String responseJson = new String(responseString, "UTF-8");
+            responseJson = JsonPath.read(responseJson, getCompareJsonPath()).toString();
             String compareJson = new String(compareString, "UTF-8");
+            compareJson = JsonPath.read(compareJson, getInputJsonPath()).toString();
 
             JSONCompareResult jsonResult = JSONCompare.compareJSON(compareJson, responseJson, getCompareMode());
 
@@ -119,6 +124,20 @@ public class JSONCompareAssertion extends AbstractScopedAssertion implements Ser
     }
     public void setCompareScope(String scope){
         setProperty(COMPARE_SCROPE, scope);
+    }
+
+    public String getCompareJsonPath(){
+        return getPropertyAsString(COMPARE_JSON_PATH);
+    }
+    public void setCompareJsonPath(String scope){
+        setProperty(COMPARE_JSON_PATH, scope);
+    }
+
+    public String getInputJsonPath(){
+        return getPropertyAsString(COMPARE_TO_JSON_PATH);
+    }
+    public void setInputJsonPath(String scope){
+        setProperty(COMPARE_TO_JSON_PATH, scope);
     }
 
     public String getCompareValue(){
