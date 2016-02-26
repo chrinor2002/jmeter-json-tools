@@ -95,22 +95,24 @@ public class JSONCompareAssertionGui extends AbstractAssertionGui implements Cha
     public void modifyTestElement(TestElement element) {
         super.configureTestElement(element);
         if (element instanceof JSONCompareAssertion) {
-            JSONCompareAssertion jpAssertion = (JSONCompareAssertion) element;
-            jpAssertion.setCompareScope(compareTo.getText());
-            jpAssertion.setCompareValue(inputValue.getText());
-            jpAssertion.setCompareVariableName(inputVariableName.getText());
-            jpAssertion.setCompareModeValue(compareMode.getText());
+            JSONCompareAssertion jsonAssertion = (JSONCompareAssertion) element;
+            saveScopeSettings(jsonAssertion);
+            jsonAssertion.setCompareScope(compareTo.getText());
+            jsonAssertion.setCompareValue(inputValue.getText());
+            jsonAssertion.setCompareVariableName(inputVariableName.getText());
+            jsonAssertion.setCompareModeValue(compareMode.getText());
         }
     }
 
     @Override
     public void configure(TestElement element) {
         super.configure(element);
-        JSONCompareAssertion jpAssertion = (JSONCompareAssertion) element;
-        compareTo.setText(jpAssertion.getCompareScope());
-        inputValue.setText(jpAssertion.getCompareValue());
-        inputVariableName.setText(jpAssertion.getCompareVariableName());
-        compareMode.setText(jpAssertion.getCompareModeValue());
+        JSONCompareAssertion jsonAssertion = (JSONCompareAssertion) element;
+        showScopeSettings(jsonAssertion, true);
+        compareTo.setText(jsonAssertion.getCompareScope());
+        inputValue.setText(jsonAssertion.getCompareValue());
+        inputVariableName.setText(jsonAssertion.getCompareVariableName());
+        compareMode.setText(jsonAssertion.getCompareModeValue());
     }
 
     @Override
