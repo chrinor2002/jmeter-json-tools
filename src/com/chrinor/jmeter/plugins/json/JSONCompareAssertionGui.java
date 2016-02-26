@@ -82,7 +82,7 @@ public class JSONCompareAssertionGui extends AbstractAssertionGui implements Cha
 
     @Override
     public String getStaticLabel() {
-        return "JSON Path Length Assertion";
+        return "JSON Comparison Assertion";
     }
 
     @Override
