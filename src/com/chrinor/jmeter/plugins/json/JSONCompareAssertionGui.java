@@ -51,7 +51,7 @@ public class JSONCompareAssertionGui extends AbstractAssertionGui implements Cha
 
         applyPath = new JLabeledTextField("Apply JSON path: ");
         compareTo = new JLabeledChoice("Compare To: ", new String[]{ JSONCompareAssertion.COMPARE_SCOPE_INPUT, JSONCompareAssertion.COMPARE_SCOPE_VARIABLE });
-        applyPath = new JLabeledTextField("Input JSON path: ");
+        inputPath = new JLabeledTextField("Input JSON path: ");
         inputValue = new JLabeledTextArea("JSON Input: ");
         inputVariableName = new JLabeledTextField("Variable Name: ");
         compareMode = new JLabeledChoice("Compare Mode: ", new String[]{
