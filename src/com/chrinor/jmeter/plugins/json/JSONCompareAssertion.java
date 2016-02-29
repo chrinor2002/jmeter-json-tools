@@ -54,9 +54,11 @@ public class JSONCompareAssertion extends AbstractScopedAssertion implements Ser
         result.setFailureMessage("");
 
         try{
-            String inputString = getThreadContext().getVariables().get(getVariableName());
-            if(!StringUtils.isEmpty(inputString)) {
-                responseString = inputString.getBytes("UTF-8");
+            if(isScopeVariable()) {
+                if (log.isDebugEnabled()) {
+                    log.debug(new StringBuilder("variable is set to ").append(getVariableName()).toString());
+                }
+                responseString = getThreadContext().getVariables().get(getVariableName()).getBytes("UTF-8");
             } else {
                 responseString = response.getResponseData();
             }
@@ -65,11 +67,16 @@ public class JSONCompareAssertion extends AbstractScopedAssertion implements Ser
                 return result.setResultForNull();
             }
 
+            if (log.isDebugEnabled()) {
+                log.debug(new StringBuilder("compare variable is set to ").append(getVariableName()).toString());
+            }
             String inputCompareString = getThreadContext().getVariables().get(getCompareVariableName());
-            if(!StringUtils.isEmpty(inputCompareString)) {
+            if(getCompareScope().equals(COMPARE_SCOPE_VARIABLE) && !StringUtils.isEmpty(inputCompareString)) {
                 compareString = inputCompareString.getBytes("UTF-8");
+            } else if(getCompareScope().equals(COMPARE_SCOPE_INPUT)) {
+                compareString = getCompareValue().getBytes("UTF-8");
             } else {
-                compareString = response.getResponseData();
+                compareString = null;
             }
 
             if (getCompareScope().equals(COMPARE_SCOPE_INPUT) && (compareString == null || compareString.length == 0)) {
@@ -81,9 +88,13 @@ public class JSONCompareAssertion extends AbstractScopedAssertion implements Ser
             }
 
             String responseJson = new String(responseString, "UTF-8");
+            log.debug(new StringBuilder("responseJson is set to ").append(responseJson).toString());
             responseJson = JsonPath.read(responseJson, getCompareJsonPath()).toString();
+            log.debug(new StringBuilder("responseJson is now set to ").append(responseJson).toString());
             String compareJson = new String(compareString, "UTF-8");
+            log.debug(new StringBuilder("compareJson is set to ").append(compareJson).toString());
             compareJson = JsonPath.read(compareJson, getInputJsonPath()).toString();
+            log.debug(new StringBuilder("compareJson is now set to ").append(compareJson).toString());
 
             JSONCompareResult jsonResult = JSONCompare.compareJSON(compareJson, responseJson, getCompareMode());
 
@@ -92,6 +103,10 @@ public class JSONCompareAssertion extends AbstractScopedAssertion implements Ser
                 result.setFailureMessage(new StringBuilder("JSONCompareResult: ").append(jsonResult.getMessage()).toString());
             }
 
+        }catch(IllegalArgumentException e){
+            log.warn("Something bad happened with JSON: ", e);
+            result.setError(true);
+            result.setFailureMessage(new StringBuilder("IllegalArgumentException: ").append(e.getMessage()).toString());
         }catch(JSONException e){
             log.warn("Cannot parse result content or input", e);
             result.setError(true);
