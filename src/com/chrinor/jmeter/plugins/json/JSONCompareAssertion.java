@@ -68,7 +68,7 @@ public class JSONCompareAssertion extends AbstractScopedAssertion implements Ser
             }
 
             if (log.isDebugEnabled()) {
-                log.debug(new StringBuilder("compare variable is set to ").append(getVariableName()).toString());
+                log.debug(new StringBuilder("compare variable is set to ").append(getCompareVariableName()).toString());
             }
             String inputCompareString = getThreadContext().getVariables().get(getCompareVariableName());
             if(getCompareScope().equals(COMPARE_SCOPE_VARIABLE) && !StringUtils.isEmpty(inputCompareString)) {
