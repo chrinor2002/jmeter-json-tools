@@ -88,17 +88,28 @@ public class JSONCompareAssertion extends AbstractScopedAssertion implements Ser
             }
 
             String responseJson = new String(responseString, "UTF-8");
-            log.debug(new StringBuilder("responseJson is set to ").append(responseJson).toString());
+            if (log.isDebugEnabled()) {
+                log.debug(new StringBuilder("responseJson is set to ").append(responseJson).toString());
+            }
             responseJson = JsonPath.read(responseJson, getCompareJsonPath()).toString();
-            log.debug(new StringBuilder("responseJson is now set to ").append(responseJson).toString());
+            if (log.isDebugEnabled()) {
+                log.debug(new StringBuilder("responseJson is now set to ").append(responseJson).toString());
+            }
             String compareJson = new String(compareString, "UTF-8");
-            log.debug(new StringBuilder("compareJson is set to ").append(compareJson).toString());
+            if (log.isDebugEnabled()) {
+                log.debug(new StringBuilder("compareJson is set to ").append(compareJson).toString());
+            }
             compareJson = JsonPath.read(compareJson, getInputJsonPath()).toString();
-            log.debug(new StringBuilder("compareJson is now set to ").append(compareJson).toString());
+            if (log.isDebugEnabled()) {
+                log.debug(new StringBuilder("compareJson is now set to ").append(compareJson).toString());
+            }
 
             JSONCompareResult jsonResult = JSONCompare.compareJSON(compareJson, responseJson, getCompareMode());
 
             if (jsonResult.failed()) {
+                if (log.isDebugEnabled()) {
+                    log.debug(jsonResult.getMessage());
+                }
                 result.setFailure(true);
                 result.setFailureMessage(new StringBuilder("JSONCompareResult: ").append(jsonResult.getMessage()).toString());
             }
