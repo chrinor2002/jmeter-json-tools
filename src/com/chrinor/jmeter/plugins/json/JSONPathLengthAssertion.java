@@ -10,6 +10,7 @@ import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import java.io.Serializable;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  *
@@ -35,7 +36,7 @@ public class JSONPathLengthAssertion extends AbstractTestElement implements Seri
     }
     public int getLengthAsInt() {
         String length = getLength();
-        return Integer.getInteger(length);
+        return NumberUtils.toInt(length);
     }
     public void setLength(String length) {
         setProperty(LENGTH, length);
