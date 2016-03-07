@@ -127,6 +127,10 @@ public class JSONPathLengthAssertion extends AbstractTestElement implements Seri
                 }
                 result.setFailure(true);
                 result.setFailureMessage(e.getMessage());
+            } catch(Exception e){
+                log.error("Assertion failed", e);
+                result.setFailure(true);
+                result.setFailureMessage(e.getMessage());
             }
         /*} else {
             try {
