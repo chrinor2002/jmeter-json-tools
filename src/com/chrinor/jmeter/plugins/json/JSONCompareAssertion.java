@@ -106,10 +106,11 @@ public class JSONCompareAssertion extends AbstractScopedAssertion implements Ser
 
             JSONCompareResult jsonResult = JSONCompare.compareJSON(compareJson, responseJson, getCompareMode());
 
+            if (log.isDebugEnabled()) {
+                log.debug("JSONCompareResult: " + jsonResult.toString());
+                log.debug("JSONCompareResult.getMessage: " + jsonResult.getMessage());
+            }
             if (jsonResult.failed()) {
-                if (log.isDebugEnabled()) {
-                    log.debug(jsonResult.getMessage());
-                }
                 result.setFailure(true);
                 result.setFailureMessage(new StringBuilder("JSONCompareResult: ").append(jsonResult.getMessage()).toString());
             }
