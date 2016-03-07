@@ -67,7 +67,7 @@ public class JSONPathLengthAssertion extends AbstractTestElement implements Seri
                     break;
 
                 case "!=":
-                    if(arr.size() == getLengthAsInt()) return;
+                    if(arr.size() != getLengthAsInt()) return;
                     break;
 
                 case ">":
