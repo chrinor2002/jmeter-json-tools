@@ -10,7 +10,6 @@ import org.apache.jorphan.gui.JLabeledTextField;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.jorphan.gui.JLabeledChoice;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -82,7 +81,7 @@ public class JSONPathLengthAssertionGui extends AbstractAssertionGui implements 
             JSONPathLengthAssertion jpAssertion = (JSONPathLengthAssertion) element;
             jpAssertion.setJsonPath(jsonPath.getText());
             jpAssertion.setOperator(operator.getText());
-            jpAssertion.setLength(NumberUtils.toInt(length.getText()));
+            jpAssertion.setLength(length.getText());
         }
     }
 

@@ -30,10 +30,14 @@ public class JSONPathLengthAssertion extends AbstractTestElement implements Seri
         setProperty(JSONPATH, jsonPath);
     }
 
-    public int getLength() {
-        return getPropertyAsInt(LENGTH, 0);
+    public String getLength() {
+        return getPropertyAsString(LENGTH);
     }
-    public void setLength(int length) {
+    public int getLengthAsInt() {
+        String length = getLength();
+        return Integer.getInteger(length);
+    }
+    public void setLength(String length) {
         setProperty(LENGTH, length);
     }
 
@@ -59,27 +63,27 @@ public class JSONPathLengthAssertion extends AbstractTestElement implements Seri
 
             switch(getOperator()){
                 case "==":
-                    if(arr.size() == getLength()) return;
+                    if(arr.size() == getLengthAsInt()) return;
                     break;
 
                 case "!=":
-                    if(arr.size() == getLength()) return;
+                    if(arr.size() == getLengthAsInt()) return;
                     break;
 
                 case ">":
-                    if(arr.size() > getLength()) return;
+                    if(arr.size() > getLengthAsInt()) return;
                     break;
 
                 case ">=":
-                    if(arr.size() >= getLength()) return;
+                    if(arr.size() >= getLengthAsInt()) return;
                     break;
 
                 case "<":
-                    if(arr.size() < getLength()) return;
+                    if(arr.size() < getLengthAsInt()) return;
                     break;
 
                 case "<=":
-                    if(arr.size() <= getLength()) return;
+                    if(arr.size() <= getLengthAsInt()) return;
                     break;
 
                 default:
