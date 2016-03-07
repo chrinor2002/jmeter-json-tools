@@ -91,7 +91,7 @@ public class JSONPathLengthAssertionGui extends AbstractAssertionGui implements 
         JSONPathLengthAssertion jpAssertion = (JSONPathLengthAssertion) element;
         jsonPath.setText(jpAssertion.getJsonPath());
         operator.setText(jpAssertion.getOperator());
-        length.setText(new Integer(jpAssertion.getLength()).toString());
+        length.setText(jpAssertion.getLength());
     }
 
     @Override
