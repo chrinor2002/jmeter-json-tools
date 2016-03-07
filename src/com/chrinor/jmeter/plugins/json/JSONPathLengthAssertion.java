@@ -55,6 +55,12 @@ public class JSONPathLengthAssertion extends AbstractTestElement implements Seri
         return getPropertyAsBoolean(INVERT);
     }*/
 
+    private class AssertionException extends RuntimeException{
+        public AssertionException(String message){
+            super(message);
+        }
+    }
+
     private void doAssert(String jsonString) {
         Object value = JsonPath.read(jsonString, getJsonPath());
 
@@ -87,16 +93,16 @@ public class JSONPathLengthAssertion extends AbstractTestElement implements Seri
                     break;
 
                 default:
-                    throw new RuntimeException(String.format("'%s' is not a known operator", getOperator()));
+                    throw new AssertionException(String.format("'%s' is not a known operator", getOperator()));
             }
 
-            throw new RuntimeException(String.format("Length of '%s' was not '%s' '%s'", arr.size(), getOperator(), getLength()));
+            throw new AssertionException(String.format("Length of '%s' was not '%s' '%s'", arr.size(), getOperator(), getLength()));
         }
 
         //if (isExpectNull())
-            //throw new RuntimeException(String.format("Value expected to be null, but found '%s'", value));
+            //throw new AssertionException(String.format("Value expected to be null, but found '%s'", value));
         //else
-            throw new RuntimeException(String.format("Value at path '%s' was not a JSONArray", getJsonPath()));
+            throw new AssertionException(String.format("Value at path '%s' was not a JSONArray", getJsonPath()));
     }
 
     @Override
@@ -112,9 +118,10 @@ public class JSONPathLengthAssertion extends AbstractTestElement implements Seri
         result.setFailureMessage("");
 
         //if (!isInvert()) {
+            // we only catch instances of AssertionException to allow the outside facilities to catch "errors" such as null pointers, etc.
             try {
                 doAssert(new String(responseData));
-            } catch (Exception e) {
+            } catch (AssertionException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Assertion failed", e);
                 }
